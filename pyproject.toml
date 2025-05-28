@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nlpimdbmoviereviews"
+version = "0.1.0"
+description = "A natural language processing project for movie genre prediction"
+authors = [
+    {name = "Chxresubles"}
+]
+requires-python = ">=3.7"
+keywords = ["natural language processing", "movie genre", "imdb", "kaggle"]
+dependencies = [
+    "fastapi==0.115.12",
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    "scikit-learn==1.6.1",
+    "torch==2.6.0",
+    "tqdm==4.67.1",
+    "uvicorn==0.34.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["nlpimdbmoviereviews*"]
+exclude = ["data*", "output*", "scripts*"]
