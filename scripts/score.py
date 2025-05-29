@@ -1,9 +1,23 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+import torch
 import pickle
 import uvicorn
-import torch
-from nlpimdbmoviereviews.constants import NARROW_PREDICTABLE_GENRES
+import argparse
+from pydantic import BaseModel
+from fastapi import FastAPI, HTTPException
+from nlpimdbmoviereviews.constants import NARROW_PREDICTABLE_GENRES, PREDICTABLE_GENRES
+
+
+parser = argparse.ArgumentParser(
+    description="Train NLP Movie Genre classification model"
+)
+parser.add_argument(
+    "--drop-hard-genres",
+    action="store_true",
+    help="Drop movie genres that are hardly predictable with the only synopsis.",
+)
+args = parser.parse_args()
+
+GENRE_LIST = NARROW_PREDICTABLE_GENRES if args.drop_hard_genres else PREDICTABLE_GENRES
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -32,9 +46,7 @@ async def predict(data: InputSchema):
 
         result = data.model_dump() | {
             genre_name: prediction_score.item()
-            for genre_name, prediction_score in zip(
-                NARROW_PREDICTABLE_GENRES, genre_prediction
-            )
+            for genre_name, prediction_score in zip(GENRE_LIST, genre_prediction)
             if prediction_score > 0.5
         }
 

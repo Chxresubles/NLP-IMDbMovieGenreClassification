@@ -7,7 +7,7 @@ from pathlib import Path
 from nlpimdbmoviereviews.trainer import ModelTrainer
 from nlpimdbmoviereviews.dataloader import DataLoader
 from nlpimdbmoviereviews.dataset import MovieGenreDataset
-from nlpimdbmoviereviews.constants import OVERVIEW, SEED, HARD_CLASSES
+from nlpimdbmoviereviews.constants import OVERVIEW, SEED
 from nlpimdbmoviereviews.validators import (
     ColumnValidator,
     GenreIdValidator,
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         Path(args.data_path) / "movies_genres.csv",
         [ColumnValidator(), GenreIdValidator()],
     )
-    features, labels = dataloader.get_data()
+    features, labels = dataloader.get_data(drop_hard_genres=args.drop_hard_genres)
 
     X = features[OVERVIEW].to_list()
     y = labels.values.astype(int)

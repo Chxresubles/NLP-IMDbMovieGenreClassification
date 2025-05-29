@@ -9,7 +9,7 @@ from nlpimdbmoviereviews.models import RoBERTa
 from nlpimdbmoviereviews.trainer import ModelTrainer
 from nlpimdbmoviereviews.dataloader import DataLoader
 from nlpimdbmoviereviews.dataset import MovieGenreDataset
-from nlpimdbmoviereviews.constants import OVERVIEW, SEED, HARD_CLASSES
+from nlpimdbmoviereviews.constants import OVERVIEW, SEED
 from nlpimdbmoviereviews.validators import (
     ColumnValidator,
     GenreIdValidator,

@@ -33,7 +33,6 @@ class ModelTrainer:
         self.model.to(device=self.device)
         for i in range(n_epochs):
             tot_loss = 0.0
-            n_batches = len(dataloader)
             y_pred = []
             y_true = []
             for data, target in tqdm(dataloader, leave=False):
@@ -87,12 +86,14 @@ class ModelTrainer:
                 output = self.model(data)
                 y_pred.append(output.round().cpu().numpy())
             y_pred = np.vstack(y_pred)
-            y = np.vstack(y_true)
+            y_true = np.vstack(y_true)
 
             # Compute metrics
-            hamming_acc = 1 - hamming_loss(y, y_pred)
-            subset_accuracy = accuracy_score(y, y_pred)
-            report = classification_report(y, y_pred, zero_division=0, output_dict=True)
+            hamming_acc = 1 - hamming_loss(y_true, y_pred)
+            subset_accuracy = accuracy_score(y_true, y_pred)
+            report = classification_report(
+                y_true, y_pred, zero_division=0, output_dict=True
+            )
 
         return {
             "Hamming accuracy": hamming_acc,

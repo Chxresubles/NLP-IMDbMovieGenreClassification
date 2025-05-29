@@ -1,7 +1,6 @@
 EPSILON = 1e-7
 
 SEED = 42
-DROPOUT = 0.2
 BATCH_SIZE = 32
 
 TITLE = "title"
